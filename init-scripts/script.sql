@@ -84,3 +84,42 @@ CREATE TABLE `tipopago` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `tipopago_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Table structure for table `item`
+--
+
+DROP TABLE IF EXISTS `item`;
+CREATE TABLE `item` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `tipo_producto` varchar(255) NOT NULL,
+  `recoger_ubicacion` varchar(255) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Table structure for table `pedidos`
+--
+
+DROP TABLE IF EXISTS `pedidos`;
+CREATE TABLE `pedidos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `delivery_id` int DEFAULT NULL,
+  `envio_id` int NOT NULL,
+  `cliente_id` int NOT NULL,
+  `fecha_solicitada` date DEFAULT (now()),
+  `hora_solicitada` timestamp(3) NULL DEFAULT (now()),
+  `hora_entregada` timestamp NULL DEFAULT NULL,
+  `entrega_estimada` int NOT NULL,
+  `metodo_pago` varchar(255) NOT NULL,
+  `subtotal` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `delivery_id` (`delivery_id`),
+  KEY `cliente_id` (`cliente_id`),
+  KEY `envio_id` (`envio_id`),
+  CONSTRAINT `pedidos_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
+  CONSTRAINT `pedidos_ibfk_3` FOREIGN KEY (`envio_id`) REFERENCES `item` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
